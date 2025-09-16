@@ -1,5 +1,10 @@
-import { Component, computed, Input, input } from '@angular/core';
+import { Component, computed, EventEmitter, Input, input, output, Output } from '@angular/core';
 
+interface UserType  {
+  id: string;
+  avatar: string;
+  name: string;
+}
 
 @Component({
   selector: 'app-user',
@@ -9,12 +14,14 @@ import { Component, computed, Input, input } from '@angular/core';
 })
 export class User {
 
-  @Input({ required: true }) avatar!: string;
-  @Input({ required: true }) name!: string;
+  @Input({ required: true }) user!: UserType; 
+  @Output() select = new EventEmitter();
 
   get imagePath() {
-    return 'assets/users/' + this.avatar;
+    return 'assets/users/' + this.user.avatar;
   }
 
-  onSelectUer() {}
+  onSelectUer() {
+    this.select.emit(this.user.id);
+  }
 }
